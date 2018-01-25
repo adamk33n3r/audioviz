@@ -49,8 +49,8 @@ audio.controls = true;
 audio.autoplay = false;
 
 var src = document.createElement('source');
-src.src = 'test.mp3';
-audio.appendChild(src);
+//src.src = 'test.mp3';
+//audio.appendChild(src);
 //document.body.appendChild(audio);
 
 var input = document.querySelector('input');
