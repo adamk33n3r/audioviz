@@ -6,6 +6,7 @@ var barCtx = canvas.getContext('2d');
 
 var source;
 var playbackRate = 1;
+var volume = 0.75;
 function speedUp() {
   playbackRate+=0.1;
   source.playbackRate.value = playbackRate;
@@ -13,6 +14,12 @@ function speedUp() {
 function speedDown() {
   playbackRate-=0.1;
   source.playbackRate.value = playbackRate;
+}
+
+var gainNode;
+function changeVolume(val) {
+  volume = val;
+  gainNode.gain.value = volume;
 }
 
 function drawLine(ctx, startX, startY, endX, endY, color) {
@@ -111,7 +118,10 @@ input.addEventListener('change', function (data) {
 
       var analyser = audioCtx.createAnalyser();
       source.connect(analyser);
-      analyser.connect(audioCtx.destination);
+      gainNode = audioCtx.createGain();
+      analyser.connect(gainNode);
+      gainNode.gain.value = 0.75;
+      gainNode.connect(audioCtx.destination);
 
       analyser.fftSize = 2048;
       var bufferLengthw = analyser.frequencyBinCount;
