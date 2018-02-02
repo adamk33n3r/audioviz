@@ -1,6 +1,8 @@
-var canvas = document.querySelector('#waveform');
+var canvas = document.querySelector('#oscilloscope');
 var canvasCtx = canvas.getContext('2d');
 //var canvas2 = document.querySelector('#frequency');
+var waveformCanvas = document.querySelector('#waveform');
+var waveformCtx = waveformCanvas.getContext('2d');
 var barCtx = canvas.getContext('2d');
 
 
@@ -42,17 +44,6 @@ function drawBar(ctx, x, y, width, height, color) {
 
 var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-var audio = document.createElement('audio');
-
-audio.preload = 'auto';
-audio.controls = true;
-audio.autoplay = false;
-
-var src = document.createElement('source');
-//src.src = 'test.mp3';
-//audio.appendChild(src);
-//document.body.appendChild(audio);
-
 var input = document.querySelector('input');
 input.addEventListener('change', function (data) {
   if (source) {
@@ -72,16 +63,16 @@ input.addEventListener('change', function (data) {
       source.buffer = buffer;
 
 
-      // var buff = buffer.getChannelData(0);
-      // // TODO: merge stereo channels
-      // // signal[i] = (fb[2*i] + fb[2*i+1]) / 2;
-      // // https://developer.mozilla.org/en-US/docs/Archive/Misc_top_level/Visualizing_Audio_Spectrum
-      // var step = Math.floor((buffer.duration * buffer.sampleRate) / 1000);
+      var buff = buffer.getChannelData(0);
+      // TODO: merge stereo channels
+      // signal[i] = (fb[2*i] + fb[2*i+1]) / 2;
+      // https://developer.mozilla.org/en-US/docs/Archive/Misc_top_level/Visualizing_Audio_Spectrum
+      var step = Math.floor((buffer.duration * buffer.sampleRate) / 1000);
 
-      // for (var i = 0; i < buff.length; i+=step) {
-      //   var height = (buff[i] * 100);
-      //   //drawBar(canvasCtx, i/step, 100, 1, height, 'red');
-      // }
+      for (var i = 0; i < buff.length; i+=step) {
+        var height = (buff[i] * 100);
+        drawBar(waveformCtx, i/step, 100, 1, height, 'red');
+      }
 
 
       // FFT_SIZE = 8192;
@@ -120,7 +111,7 @@ input.addEventListener('change', function (data) {
       source.connect(analyser);
       gainNode = audioCtx.createGain();
       analyser.connect(gainNode);
-      gainNode.gain.value = 0.75;
+      gainNode.gain.value = volume;
       gainNode.connect(audioCtx.destination);
 
       analyser.fftSize = 2048;
@@ -230,15 +221,15 @@ input.addEventListener('change', function (data) {
   reader.readAsArrayBuffer(file);
 });
 
-audio.load();
-audio.currentTime = 13;
-audio.volume = 1;
-//audio.play();
-console.log(audio);
 
-function play() {
-  audio.currentTime = 0.01;
-  audio.volume = volume;
+var knob = document.getElementById('knob'),
+circle = document.getElementById('pie'),
+radius = parseInt(circle.getAttribute('r'), 10),
+circumference = 2 * radius * Math.PI,
+percentDisplay = document.querySelector('output');
 
-  setTimeout(function() { audio.play(); }, 1);
-}
+knob.addEventListener('input', function () {
+  var percentValue = (Math.abs(knob.value) / 100) * circumference;
+  pie.style.strokeDasharray = percentValue + ' ' + circumference;
+  percentDisplay.value = knob.value + '%';
+});
