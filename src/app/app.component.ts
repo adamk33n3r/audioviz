@@ -51,6 +51,9 @@ export class AppComponent implements OnInit {
     this.waveformCtx = this.waveformCanvas.getContext('2d');
 
     this.waveformCanvas.addEventListener('click', (event) => {
+      if (!this.source) {
+        return;
+      }
       var x = event.offsetX;
       var y = event.offsetY;
       console.log('Clicked here:', x, y);
