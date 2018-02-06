@@ -6,9 +6,35 @@ var waveformCtx = waveformCanvas.getContext('2d');
 var barCtx = canvas.getContext('2d');
 
 
+var analyser;
+var freqAnalyser;
+var freqAnalyser2;
 var source;
 var playbackRate = 1;
 var volume = 0.75;
+
+waveformCanvas.addEventListener('click', function (event) {
+  var x = event.offsetX;
+  var y = event.offsetY;
+  console.log('Clicked here:', x, y);
+  var percent = x / waveformCanvas.width;
+  console.log('Percentage:', percent);
+  source.stop();
+  createAudioSource(source.buffer);
+  source.connect(analyser);
+  source.connect(freqAnalyser);
+  source.connect(freqAnalyser2);
+  console.log('Playing at', percent* source.buffer.duration);
+  source.start(0, percent * source.buffer.duration);
+});
+
+function createAudioSource(buffer) {
+  var audioElement = new Audio(URL.createObjectURL(file));
+  audioCtx.createMediaElementSource(audioElement);
+  source = audioCtx.createBufferSource();
+  source.buffer = buffer;
+}
+
 function speedUp() {
   playbackRate+=0.1;
   source.playbackRate.value = playbackRate;
@@ -52,15 +78,13 @@ input.addEventListener('change', function (data) {
 
   console.log('change', data);
   var file = data.target.files[0];
-  var reader = new FileReader
+  var reader = new FileReader;
   reader.onload = function () {
     var buffer = reader.result;
     audioCtx.decodeAudioData(buffer)
     .then(function (buffer) {
       console.log('buffer', buffer);
-      source = audioCtx.createBufferSource();
-      console.log(source);
-      source.buffer = buffer;
+      createAudioSource(buffer);
 
 
       var buff = buffer.getChannelData(0);
@@ -69,6 +93,7 @@ input.addEventListener('change', function (data) {
       // https://developer.mozilla.org/en-US/docs/Archive/Misc_top_level/Visualizing_Audio_Spectrum
       var step = Math.floor((buffer.duration * buffer.sampleRate) / 1000);
 
+      waveformCtx.clearRect(0, 0, waveformCanvas.width, waveformCanvas.height);
       for (var i = 0; i < buff.length; i+=step) {
         var height = (buff[i] * 100);
         drawBar(waveformCtx, i/step, 100, 1, height, 'red');
@@ -107,7 +132,7 @@ input.addEventListener('change', function (data) {
 
 
 
-      var analyser = audioCtx.createAnalyser();
+      analyser = audioCtx.createAnalyser();
       source.connect(analyser);
       gainNode = audioCtx.createGain();
       analyser.connect(gainNode);
@@ -123,6 +148,11 @@ input.addEventListener('change', function (data) {
         drawVisual = requestAnimationFrame(draw);
         drawBars();
         drawWaveform();
+        // Draw cursor
+        var percent = audioCtx.currentTime / source.buffer.duration;
+        console.log(percent);
+        console.log(percent * waveformCanvas.width);
+        drawBar(waveformCtx, percent * waveformCanvas.width, 0, 1, waveformCanvas.height, 'pink');
       }
 
       function drawWaveform() {
@@ -152,8 +182,8 @@ input.addEventListener('change', function (data) {
 
       }
 
-      var freqAnalyser = audioCtx.createAnalyser();
-      var freqAnalyser2 = audioCtx.createAnalyser();
+      freqAnalyser = audioCtx.createAnalyser();
+      freqAnalyser2 = audioCtx.createAnalyser();
       source.connect(freqAnalyser);
       source.connect(freqAnalyser2);
       freqAnalyser.fftSize = 8192;
@@ -199,7 +229,7 @@ input.addEventListener('change', function (data) {
       //source.connect(audioCtx.destination);
       source.loop = false;
       source.playbackRate.value = playbackRate;
-      source.start(0);
+      source.start();
 
 
 
