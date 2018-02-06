@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
+import { AudioFileComponent } from './audio-file/audio-file.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AudioFileComponent
   ],
   imports: [
     BrowserModule
