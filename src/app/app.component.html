@@ -1,7 +1,12 @@
 <div>
   <audioviz-file style='float: left' (file)='setUp($event)'></audioviz-file>
-  <button (click)='playbackRate = playbackRate - 0.1'>&lt;</button>
-  <button (click)='playbackRate = playbackRate + 0.1'>&gt;</button>
+  <!-- <button (click)='playbackRate = playbackRate - 0.1'>&lt;</button> -->
+  <input type='range' min='0' max='2' step='0.01' [(ngModel)]='playbackRate' />
+  <span>{{ playbackRate | number: '1.2' }}</span>
+  <!-- <button (click)='playbackRate = playbackRate + 0.1'>&gt;</button> -->
+  <button type='button' (click)='pause()'><i class='fa fa-pause'></i></button>
+  <button type='button' (click)='play()'><i class='fa fa-play'></i></button>
+
   <input style='float: right' type='range' min='0' max='1' step='0.01' (input)='volume = $event.target.value' value='0.75' />
 </div>
 <canvas id='waveform' width='1000' height='200'></canvas>

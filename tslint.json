@@ -60,10 +60,6 @@
     "no-empty": false,
     "no-empty-interface": true,
     "no-eval": true,
-    "no-inferrable-types": [
-      true,
-      "ignore-params"
-    ],
     "no-misused-new": true,
     "no-non-null-assertion": true,
     "no-shadowed-variable": true,
@@ -120,13 +116,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "app",
+      "audioviz",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "app",
+      "audioviz",
       "kebab-case"
     ],
     "no-output-on-prefix": true,
