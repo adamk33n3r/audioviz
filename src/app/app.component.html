@@ -7,10 +7,20 @@
   <button type='button' (click)='pause()'><i class='fa fa-pause'></i></button>
   <button type='button' (click)='play()'><i class='fa fa-play'></i></button>
 
-  <input style='float: right' type='range' min='0' max='1' step='0.01' (input)='volume = $event.target.value' value='0.75' />
+  <input style='float: right' type='range' min='-100' max='0' step='0.1' (input)='volume = $event.target.value' value='-9' />
 </div>
 <canvas id='waveform' width='1000' height='200'></canvas>
 <canvas id='oscilloscope' width='1000' height='400'></canvas>
+<br />
+<label>Min Decibels</label>
+<input type='range' min='-100' max='0' step='10' [(ngModel)]='minDecibels' />
+{{ minDecibels }}
+<label>Max Decibels</label>
+<input type='range' min='-100' max='0' step='10' [(ngModel)]='maxDecibels' />
+{{ maxDecibels }}
+<label>Multiplier</label>
+<input type='range' min='10' max='100' step='10' [(ngModel)]='multiplier' />
+{{ multiplier }}
 <!-- <canvas id='frequency' width='1000' height='400'></canvas> -->
 <!-- <br />
 <div style='width: 200px'>

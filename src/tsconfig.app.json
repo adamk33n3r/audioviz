@@ -3,8 +3,9 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "baseUrl": "./",
-    "module": "es2015",
-    "types": []
+    "module": "es6",
+    "types": [],
+    "allowUnreachableCode": true
   },
   "exclude": [
     "test.ts",

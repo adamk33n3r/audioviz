@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@adamk33n3r/ringbuffer.js@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@adamk33n3r/ringbuffer.js/-/ringbuffer.js-1.0.4.tgz#87e24f4d363e3492deb3e3db11dbeff2167a01ac"
+  integrity sha512-LOc3fOhrBbQqvzRzTp4jzTw1gsSkFd3yVg+rpSF3PCHrhejXxCn62zfbS+KFHMbcub45xL7fi+ESN4yeGLvEeQ==
+
 "@angular-devkit/build-optimizer@0.0.42":
   version "0.0.42"
   resolved "https://registry.yarnpkg.com/@angular-devkit/build-optimizer/-/build-optimizer-0.0.42.tgz#402b0dda4883db91e2381c3ddc55888408a7894e"
@@ -3737,6 +3742,11 @@ jsesc@~0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-0.5.0.tgz#e7dee66e35d6fc16f710fe91d5cf69f70f08911d"
 
+jsfft@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/jsfft/-/jsfft-0.0.4.tgz#779f1d4e87b7da3aad51027b8081d34235660e7f"
+  integrity sha512-INIqKIPQSwN63QcUNzj8Tkf/Vlzf+GohQXUxt41xNxnQFczPB3gCzfZEg9jzBodRpaaIUpdea2Eu5D3CpsF3FQ==
+
 json-loader@^0.5.4:
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/json-loader/-/json-loader-0.5.7.tgz#dca14a70235ff82f0ac9a3abeb60d337a365185d"
@@ -6939,9 +6949,10 @@ typedarray@^0.0.6, typedarray@~0.0.5:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript@~2.5.3:
-  version "2.5.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.5.3.tgz#df3dcdc38f3beb800d4bc322646b04a3f6ca7f0d"
+typescript@^3.5.0:
+  version "3.5.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.3.tgz#c830f657f93f1ea846819e929092f5fe5983e977"
+  integrity sha512-ACzBtm/PhXBDId6a6sDJfroT2pOWt/oOnk4/dElG5G33ZL776N3Y6/6bKZJBFpd+b05F3Ct9qDjMeJmRWtE2/g==
 
 typescript@~2.6.2:
   version "2.6.2"
