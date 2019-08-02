@@ -1,4 +1,4 @@
 #!/bin/bash
 
-ng build --prod --base-href "http://adam-keenan.com/audioviz/"
+ng build --prod --base-href "https://adam-keenan.com/audioviz/"
 ngh
