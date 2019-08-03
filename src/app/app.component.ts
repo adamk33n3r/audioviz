@@ -5,7 +5,7 @@ import { Mixer } from './audio/mixer';
 
 
 @Component({
-  selector: 'audioviz-root',
+  selector: 'av-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -80,12 +80,14 @@ export class AppComponent implements OnInit {
   public ngOnInit() {
     this.audioCtx = new ((<any> window).AudioContext || (<any> window).webkitAudioContext)();
     this.mixer = new Mixer(this.audioCtx);
+    this.volume = -9;
+
     this.mixer.createNewTrack();
     // this.gainNode = this.audioCtx.createGain();
     // this.gainNode.gain.value = this.volume;
     // this.gainNode.connect(this.audioCtx.destination);
     this.waveformAnalyzer = this.audioCtx.createAnalyser();
-    this.mixer.connectAfterGain(this.waveformAnalyzer);
+    this.mixer.connectBeforeGain(this.waveformAnalyzer);
 
 
     // new AudioCon
@@ -117,7 +119,7 @@ export class AppComponent implements OnInit {
       this.source.stop();
       this.createAudioSource(this.source.buffer);
 
-      this.mixer.connectAfterGain(this.freqAnalyser);
+      this.mixer.connectBeforeGain(this.freqAnalyser);
 
       console.log('Playing at', percent * this.source.buffer.duration);
       this.source.start(0, percent * this.source.buffer.duration);
@@ -133,20 +135,18 @@ export class AppComponent implements OnInit {
       this.xPosWaveFormJustLeft = true;
     });
 
-    this.volume = 0.75;
-
-    // const audioUrl = 'assets/september.mp3';
-    // const request = new XMLHttpRequest();
-    // request.open('GET', audioUrl, true);
-    // request.responseType = 'arraybuffer';
-    // request.onload = () => {
-    //   const arrayBuffer = request.response as ArrayBuffer;
-    //   this.decodeAudioData(arrayBuffer).then(() => {
-    //     this.source.start();
-    //     this.pause();
-    //   });
-    // };
-    // request.send();
+    const audioUrl = 'assets/september.mp3';
+    const request = new XMLHttpRequest();
+    request.open('GET', audioUrl, true);
+    request.responseType = 'arraybuffer';
+    request.onload = () => {
+      const arrayBuffer = request.response as ArrayBuffer;
+      this.decodeAudioData(arrayBuffer).then(() => {
+        this.source.start();
+        this.pause();
+      });
+    };
+    request.send();
 
     // const osc = this.audioCtx.createOscillator();
     // osc.connect(this.gainNode);
@@ -236,7 +236,7 @@ export class AppComponent implements OnInit {
 
       this.freqAnalyser = this.audioCtx.createAnalyser();
 
-      this.mixer.connectAfterGain(this.freqAnalyser);
+      this.mixer.connectBeforeGain(this.freqAnalyser);
 
       this.freqAnalyser.fftSize = 4096;
       this.freqAnalyser.maxDecibels = -10;

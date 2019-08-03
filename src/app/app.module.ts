@@ -5,18 +5,22 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { AudioFileComponent } from './audio-file/audio-file.component';
+import { MixerComponent } from './mixer/mixer.component';
+import { MixerTrackComponent } from './mixer-track/mixer-track.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    AudioFileComponent
+    AudioFileComponent,
+    MixerComponent,
+    MixerTrackComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [MixerComponent]
 })
 export class AppModule { }

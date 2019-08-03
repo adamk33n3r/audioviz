@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@adamk33n3r/ringbuffer.js": "^1.0.4",
-    "@angular/cli": "1.6.7",
+    "@angular/cli": "^8.2.0",
     "@angular/compiler-cli": "^5.2.0",
     "@angular/language-service": "^5.2.0",
     "@types/jasmine": "~2.8.3",
