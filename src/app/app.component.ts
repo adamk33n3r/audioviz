@@ -240,7 +240,7 @@ export class AppComponent implements OnInit {
 
       this.freqAnalyser.fftSize = 4096;
       this.freqAnalyser.maxDecibels = -10;
-      this.freqAnalyser.minDecibels = -100;
+      this.freqAnalyser.minDecibels = -80;
 
 
       this.waveformCanvasValues = new Array(this.waveformCanvas.width);
@@ -314,9 +314,9 @@ export class AppComponent implements OnInit {
       const max = Math.ceil(range / 2);
       for (let i = min; i < max; i++) {
         const height = this.waveformCanvasValues[this.xPosWaveform + i];
-        this.drawBar(this.waveformCtx, this.xPosWaveform + i, maxHeight - height, 1, 2 * height, 'red');
+        this.drawBar(this.waveformCtx, this.xPosWaveform + i, maxHeight - height, 1, 2 * height, '#ffd740');
       }
-      this.drawBar(this.waveformCtx, this.xPosWaveform - 1, 0, 3, 200, '#333');
+      this.drawBar(this.waveformCtx, this.xPosWaveform - 1, 0, 3, 200, '#673ab7');
     } else if (this.xPosWaveFormJustLeft) {
       this.xPosWaveFormJustLeft = false;
       this.waveformCtx.clearRect(0, 0, this.waveformCanvas.width, this.waveformCanvas.height);

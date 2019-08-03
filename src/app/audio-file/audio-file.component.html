@@ -1,1 +1,3 @@
-<input type='file' (change)='onFileChange($event)' />
+<input style='display: none' id='input-file-id' type='file' (change)='onFileChange($event)' />
+<label for='input-file-id' class='mat-button mat-raised-button mat-primary'>Choose File</label>
+<span class='file-name'>{{ selectedFile?.name || 'Select a music file...' }}</span>

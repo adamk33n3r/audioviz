@@ -1,25 +1,26 @@
 <div>
-  <audioviz-file style='float: left' (file)='setUp($event)'></audioviz-file>
+  <av-file style='float: left' (file)='setUp($event)'></av-file>
   <!-- <button (click)='playbackRate = playbackRate - 0.1'>&lt;</button> -->
-  <input type='range' min='0' max='2' step='0.01' [(ngModel)]='playbackRate' />
+  <mat-slider min='0' max='2' step='0.01' (input)='playbackRate = $event.value' [value]='playbackRate'></mat-slider>
   <span>{{ playbackRate | number: '1.2' }}</span>
   <!-- <button (click)='playbackRate = playbackRate + 0.1'>&gt;</button> -->
-  <button type='button' (click)='pause()'><i class='fa fa-pause'></i></button>
-  <button type='button' (click)='play()'><i class='fa fa-play'></i></button>
+  <button mat-raised-button style='margin-left: 5px' type='button' (click)='pause()' [disabled]='!source'><i class='fa fa-pause'></i></button>
+  <button mat-raised-button style='margin-left: 5px' type='button' (click)='play()' [disabled]='!source'><i class='fa fa-play'></i></button>
 
-  <input style='float: right' type='range' min='-50' max='0' step='1' (input)='volume = $event.target.value' value='-9' />
+  <!-- <input style='float: right' type='range' min='-50' max='0' step='1' (input)='volume = $event.target.value' value='-9' /> -->
+  <mat-slider style='float: right' min='-50' max='0' step='1' (input)='volume = $event.value' [value]='volume'></mat-slider>
 </div>
 <canvas id='waveform' width='1000' height='200'></canvas>
 <canvas id='oscilloscope' width='1000' height='400'></canvas>
 <br />
 <label>Min Decibels</label>
-<input type='range' min='-100' max='0' step='10' [(ngModel)]='minDecibels' />
+<mat-slider thumbLabel min='-100' [max]='maxDecibels - 10' step='10' (input)='minDecibels = $event.value' [value]='minDecibels'></mat-slider>
 {{ minDecibels }}
 <label>Max Decibels</label>
-<input type='range' min='-100' max='0' step='10' [(ngModel)]='maxDecibels' />
+<mat-slider thumbLabel [min]='minDecibels + 10' max='0' step='10' (input)='maxDecibels = $event.value' [value]='maxDecibels'></mat-slider>
 {{ maxDecibels }}
 <label>Multiplier</label>
-<input type='range' min='10' max='100' step='10' [(ngModel)]='multiplier' />
+<mat-slider thumbLabel min='10' max='100' step='10' (input)='multiplier = $event.value' [value]='multiplier'></mat-slider>
 {{ multiplier }}
 <!-- <canvas id='frequency' width='1000' height='400'></canvas> -->
 <!-- <br />

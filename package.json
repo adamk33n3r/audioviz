@@ -13,18 +13,21 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^8.2.0",
+    "@angular/cdk": "^8.1.2",
     "@angular/common": "^8.2.0",
     "@angular/compiler": "^8.2.0",
     "@angular/core": "^8.2.0",
     "@angular/forms": "^8.2.0",
+    "@angular/material": "^8.1.2",
     "@angular/platform-browser": "^8.2.0",
     "@angular/platform-browser-dynamic": "^8.2.0",
     "@angular/router": "^8.2.0",
     "core-js": "^2.4.1",
+    "hammerjs": "^2.0.8",
     "rxjs": "^6.5.2",
+    "rxjs-compat": "^6.0.0-rc.0",
     "tslib": "^1.10.0",
-    "zone.js": "~0.9.1",
-    "rxjs-compat": "^6.0.0-rc.0"
+    "zone.js": "~0.9.1"
   },
   "devDependencies": {
     "@adamk33n3r/ringbuffer.js": "^1.0.4",

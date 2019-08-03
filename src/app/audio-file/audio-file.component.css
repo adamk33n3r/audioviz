@@ -1,0 +1,9 @@
+.file-name {
+    width: 250px;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 5px;
+    vertical-align: middle;
+    white-space: nowrap;
+}

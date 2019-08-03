@@ -4,12 +4,14 @@ export class Mixer {
     private tracks: Track[] = [];
 
     public get gain(): number {
-        return this.masterGain.gain.value;
+        const db = Math.log10(this.masterGain.gain.value) * 20;
+        return db;
     }
 
     public set gain(db: number) {
         const gain = Math.pow(10, db / 20);
-        this.masterGain.gain.setTargetAtTime(gain, this.audioContext.currentTime, 1 / 2 / 3);
+        this.masterGain.gain.value = gain;
+        // this.masterGain.gain.setTargetAtTime(gain, this.audioContext.currentTime, 1 / 2 / 3);
     }
 
     public constructor(public audioContext: BaseAudioContext) {
