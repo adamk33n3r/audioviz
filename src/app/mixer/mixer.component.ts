@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Track } from '../audio/mixer';
 
 @Component({
   selector: 'av-mixer',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./mixer.component.css']
 })
 export class MixerComponent implements OnInit {
+
+  public tracks: Track[] = [];
 
   constructor() { }
 

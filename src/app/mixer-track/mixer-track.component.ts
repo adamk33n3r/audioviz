@@ -15,6 +15,8 @@ export class MixerTrackComponent implements OnInit {
   @Input()
   public number: number;
 
+  public gain: number;
+
   constructor() { }
 
   ngOnInit() {
