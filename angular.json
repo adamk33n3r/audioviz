@@ -17,7 +17,12 @@
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
             "assets": [
-              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "/assets/",
+                "ignore": ["**/*.mp3"]
+              },
               "src/favicon.ico"
             ],
             "styles": [
