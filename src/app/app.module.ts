@@ -21,6 +21,6 @@ import { MixerTrackComponent } from './mixer-track/mixer-track.component';
     FormsModule,
   ],
   providers: [],
-  bootstrap: [MixerComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

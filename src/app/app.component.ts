@@ -265,7 +265,7 @@ export class AppComponent implements OnInit {
       });
 
       // Loops
-      this.draw(buffer, data);
+      this.draw(buffer);
 
 
 
@@ -286,9 +286,9 @@ export class AppComponent implements OnInit {
 
   private waveformCanvasValues = [];
 
-  private draw(buffer: AudioBuffer, data: Float32Array) {
+  private draw(buffer: AudioBuffer) {
     requestAnimationFrame(() => {
-      this.draw(buffer, data);
+      this.draw(buffer);
     });
 
     const now = Date.now();
@@ -313,13 +313,7 @@ export class AppComponent implements OnInit {
       const min = -Math.floor(range / 2);
       const max = Math.ceil(range / 2);
       for (let i = min; i < max; i++) {
-        const percentX = (this.xPosWaveform + i) / this.waveformCanvas.width;
-        const center = Math.floor(percentX * data.length);
-        let height = 0;
-        for (let j = 0; j < step; j++) {
-          height += Math.abs(data[center - step / 2 + j] * maxHeight);
-        }
-        height /= step;
+        const height = this.waveformCanvasValues[this.xPosWaveform + i];
         this.drawBar(this.waveformCtx, this.xPosWaveform + i, maxHeight - height, 1, 2 * height, 'red');
       }
       this.drawBar(this.waveformCtx, this.xPosWaveform - 1, 0, 3, 200, '#333');
