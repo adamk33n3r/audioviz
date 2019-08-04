@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { getFFT, getBands, getFFTInternal, getBandsInternal } from './audio';
 import { Mixer } from './audio/mixer';
+import { environment } from '../environments/environment';
 
 
 @Component({
@@ -135,11 +136,18 @@ export class AppComponent implements OnInit {
       this.xPosWaveFormJustLeft = true;
     });
 
+    if (environment.production) {
+      return;
+    }
+
     const audioUrl = 'assets/september.mp3';
     const request = new XMLHttpRequest();
     request.open('GET', audioUrl, true);
     request.responseType = 'arraybuffer';
     request.onload = () => {
+      if (request.status !== 200) {
+        return;
+      }
       const arrayBuffer = request.response as ArrayBuffer;
       this.decodeAudioData(arrayBuffer).then(() => {
         this.source.start();
