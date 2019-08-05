@@ -1,3 +1,5 @@
+import { Effect } from './daw/effects/effect';
+
 export class Mixer {
     public masterTrack: Track;
     private masterGain: GainNode;
@@ -41,11 +43,14 @@ export class Mixer {
 }
 
 export class Track extends GainNode {
-    private effectSlots = [];
+    private effectSlots: Effect[] = [];
     public constructor(private mixer: Mixer) {
         super(mixer.audioContext);
         if (this.mixer.masterTrack) {
             this.connect(this.mixer.masterTrack);
         }
+    }
+
+    public addEffect(effect: Effect, idx?: number): void {
     }
 }

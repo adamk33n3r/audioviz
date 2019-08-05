@@ -9,21 +9,30 @@ import { AudioFileComponent } from './audio-file/audio-file.component';
 import { MixerComponent } from './mixer/mixer.component';
 import { MixerTrackComponent } from './mixer-track/mixer-track.component';
 import { MaterialModule } from './material.module';
+import { AppRoutingModule } from './app-routing.module';
+import { DawComponent } from './daw/daw.component';
+import { VisualizerComponent } from './visualizer/visualizer.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    VisualizerComponent,
+
     AudioFileComponent,
     MixerComponent,
     MixerTrackComponent,
+
+    DawComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
 
-    MaterialModule
+    MaterialModule,
+
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

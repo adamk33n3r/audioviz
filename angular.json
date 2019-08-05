@@ -17,12 +17,7 @@
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "src/assets",
-                "output": "/assets/",
-                "ignore": ["**/*.mp3"]
-              },
+              "src/assets",
               "src/favicon.ico"
             ],
             "styles": [
@@ -32,6 +27,12 @@
           },
           "configurations": {
             "production": {
+              "assets": [{
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "/assets/",
+                "ignore": ["**/*.mp3"]
+              }],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
