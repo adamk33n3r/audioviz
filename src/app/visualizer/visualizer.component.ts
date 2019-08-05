@@ -298,7 +298,12 @@ export class VisualizerComponent implements OnInit, OnDestroy {
         const center = Math.floor(percentX * data.length);
         let height = 0;
         for (let j = 0; j < step; j++) {
-          height += Math.abs(data[center - step / 2 + j] * maxHeight);
+          const idx = center - Math.floor(step / 2) + j;
+          if (idx < 0 || idx > data.length - 1) {
+            continue;
+          }
+          const n = Math.abs(data[idx] * maxHeight);
+          height += n;
         }
         height /= step;
         this.waveformCanvasValues[i] = height;
