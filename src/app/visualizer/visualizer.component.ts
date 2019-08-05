@@ -47,7 +47,7 @@ export class VisualizerComponent implements OnInit, OnDestroy {
 
   public get playbackRate(): number {
     if (!this.source) {
-      return 0;
+      return 1;
     }
 
     return this.source.playbackRate.value;
@@ -59,8 +59,6 @@ export class VisualizerComponent implements OnInit, OnDestroy {
 
     this.source.playbackRate.value = value;
   }
-  private cachedPlaybackRate: number = 1;
-  private cachedTime: number = 0;
 
   // FPS
   private fps: number = 30;
@@ -184,7 +182,6 @@ export class VisualizerComponent implements OnInit, OnDestroy {
   }
 
   public play() {
-    this.playbackRate = this.cachedPlaybackRate;
     if (this.source) {
       this.createAudioSource(this.source.buffer);
     }
@@ -202,7 +199,6 @@ export class VisualizerComponent implements OnInit, OnDestroy {
   }
 
   public pause() {
-    this.cachedPlaybackRate = this.playbackRate;
     this.source.stop(0);
     this.pausedAt = Date.now() - this.startedAt;
     console.log('pausedAt:', this.pausedAt);
@@ -269,9 +265,13 @@ export class VisualizerComponent implements OnInit, OnDestroy {
   }
 
   private createAudioSource(buffer) {
+    const oldPlaybackRate = this.playbackRate;
     this.source = this.audioCtx.createBufferSource();
     this.source.buffer = buffer;
     this.source.connect(this.mixer.masterTrack);
+
+    this.source.loop = true;
+    this.source.playbackRate.value = oldPlaybackRate;
   }
 
   private visualize(buffer: AudioBuffer) {
@@ -318,15 +318,6 @@ export class VisualizerComponent implements OnInit, OnDestroy {
 
       // Loops
       this.draw(buffer);
-
-
-
-
-      // source.connect(audioCtx.destination);
-      this.source.loop = true;
-      this.source.playbackRate.value = 1;
-      // this.source.start();
-
   }
 
   private drawBar(ctx: CanvasRenderingContext2D, x: number, y: number, width: number, height: number, color: string) {
