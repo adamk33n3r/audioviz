@@ -27,12 +27,15 @@
           },
           "configurations": {
             "production": {
-              "assets": [{
-                "glob": "**/*",
-                "input": "src/assets",
-                "output": "/assets/",
-                "ignore": ["**/*.mp3"]
-              }],
+              "assets": [
+                {
+                  "glob": "**/*",
+                  "input": "src/assets",
+                  "output": "/assets/",
+                  "ignore": ["**/*.mp3"]
+                },
+                "src/favicon.ico"
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,

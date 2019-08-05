@@ -215,6 +215,8 @@ export class VisualizerComponent implements OnInit, OnDestroy {
     if (this.source) {
       this.source.stop(0);
     }
+    this.startedAt = 0;
+    this.pausedAt = 0;
     const reader = new FileReader();
     reader.onload = () => {
       const arrayBuffer = reader.result as ArrayBuffer;
