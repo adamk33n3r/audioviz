@@ -177,7 +177,9 @@ export class VisualizerComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy() {
-    this.source.stop();
+    if (this.source) {
+      this.source.stop();
+    }
     this.audioCtx.close();
   }
 

@@ -12,6 +12,7 @@ import { MaterialModule } from './material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { DawComponent } from './daw/daw.component';
 import { VisualizerComponent } from './visualizer/visualizer.component';
+import { OscillatorComponent } from './oscillator/oscillator.component';
 
 
 @NgModule({
@@ -24,6 +25,8 @@ import { VisualizerComponent } from './visualizer/visualizer.component';
     MixerTrackComponent,
 
     DawComponent,
+
+    OscillatorComponent,
   ],
   imports: [
     BrowserModule,

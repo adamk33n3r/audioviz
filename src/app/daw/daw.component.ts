@@ -9,10 +9,10 @@ import { Mixer } from '../audio/mixer';
 })
 export class DawComponent implements OnInit {
 
+    public mixer: Mixer;
+
     private audioCtx: AudioContext;
     private source: AudioBufferSourceNode;
-
-    private mixer: Mixer;
 
     constructor(private $audioDecoder: AudioDecoderService) { }
 

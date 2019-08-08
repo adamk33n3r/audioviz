@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Track } from '../audio/mixer';
+import { Component, OnInit, Input } from '@angular/core';
+import { Track, Mixer } from '../audio/mixer';
 
 @Component({
   selector: 'av-mixer',
@@ -8,11 +8,18 @@ import { Track } from '../audio/mixer';
 })
 export class MixerComponent implements OnInit {
 
+  @Input()
+  private mixer: Mixer;
+
   public tracks: Track[] = [];
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
+    this.tracks.push(this.mixer.masterTrack);
+    this.tracks.push(this.mixer.createNewTrack());
+    // this.tracks.push(this.mixer.createNewTrack());
+    // this.tracks.push(this.mixer.createNewTrack());
   }
 
 }

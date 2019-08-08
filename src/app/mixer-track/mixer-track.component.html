@@ -1,7 +1,10 @@
+<div style='width: 100px'>
 
-<input [(ngModel)]='gain' type='range' min='-50' max='0' />
-{{ gain }}
-<p>TR {{ number }}</p>
+    <mat-slider vertical min='-48' max='0' step='3' value='-9' thumbLabel tickInterval='3' (input)='db = $event.value' [value]='db'></mat-slider>
+    <p style='text-align: center'>({{ track.name }})</p>
+    <p style='text-align: center'>{{ leftDb | async | number:'1.1-1' }} | {{ rightDb | async | number:'1.1-1' }}</p>
+    <meter max='12' min='-40' [value]='leftDb | async'></meter>
+    <br/>
+    <meter max='12' min='-40' [value]='rightDb | async'></meter>
 
-<button mat-raised-button>HI</button>
-<mat-slider vertical min='-48' max='0' step='3' value='-9' thumbLabel tickInterval='3'></mat-slider>
+</div>

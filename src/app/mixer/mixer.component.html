@@ -1,3 +1,3 @@
-<av-mixer-track></av-mixer-track>
-
-<av-mixer-track *ngFor='let track of tracks; let i = index' [track]='track' [number]='i'></av-mixer-track>
+<div>
+    <av-mixer-track *ngFor='let track of tracks' [track]='track'></av-mixer-track>
+</div>

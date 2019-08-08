@@ -1,0 +1,23 @@
+
+<div class='container'>
+    <label>Hz</label>
+    <input type='number' [(ngModel)]='hertz' />
+    <button mat-button mat-raised-button (click)='pulse()'>Pulse</button>
+    <mat-form-field>
+        <mat-label>Oscillator Type</mat-label>
+        <mat-select [(ngModel)]='selectedType'>
+            <mat-option *ngFor='let type of types' [value]='type'>
+                {{ type | titlecase }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Mixer Track</mat-label>
+        <mat-select [(ngModel)]='selectedTrack'>
+            <mat-option *ngFor='let track of mixer.tracks' [value]='track'>
+                {{ track.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <canvas width='400' height='150' #canvas></canvas>
+</div>
