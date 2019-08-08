@@ -91,7 +91,7 @@ export class OscillatorComponent implements OnInit {
         // this.oscillator.frequency.setValueAtTime(200, this.mixer.audioContext.currentTime  + 0.5);
         // this.oscillator.frequency.setValueCurveAtTime([440, 220], this.mixer.audioContext.currentTime, 0.1);
         // this.oscillator.frequency.setTargetAtTime(200, this.mixer.audioContext.currentTime, 1);
-        this.oscillator.stop(this.mixer.audioContext.currentTime + 1);
+        this.oscillator.stop(this.mixer.audioContext.currentTime + 2);
         // modFreq.stop(this.mixer.audioContext.currentTime + 3);
     }
 

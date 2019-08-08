@@ -5,7 +5,11 @@ import { gainToDb, dbToGain } from './utils';
 export class Mixer {
     public masterTrack: Track;
     private masterGain: GainNode;
-    private tracks: Track[] = [];
+    private _tracks: Track[] = [];
+
+    public get tracks(): Track[] {
+        return this._tracks;
+    }
 
     public get gain(): number {
         const db = Math.log10(this.masterGain.gain.value) * 20;
@@ -26,13 +30,13 @@ export class Mixer {
     }
 
     public createNewTrack(name?: string): Track {
-        const track = new Track(this, this.tracks.length, name);
-        this.tracks.push(track);
+        const track = new Track(this, this._tracks.length, name);
+        this._tracks.push(track);
         return track;
     }
 
     public getTrack(number: number): Track {
-        return this.tracks[number];
+        return this._tracks[number];
     }
 
     public connectBeforeGain(node: AudioNode) {
@@ -93,9 +97,6 @@ export class Track extends GainNode {
             rmsR = rmsR < 0.001 ? 0 : rmsR;
             const dbL = Math.max(-40, this.getDecibels(rmsL));
             const dbR = Math.max(-40, this.getDecibels(rmsR));
-            if (dbL > 0) {
-                console.log(rmsL, this.rms(this.timeDataLeft), lastL * smoothing);
-            }
             if (rmsL !== lastL || rmsR !== lastR) {
                 this.dbSubject.next([dbL, dbR]);
                 lastL = rmsL;

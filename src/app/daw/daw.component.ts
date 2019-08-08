@@ -11,6 +11,8 @@ export class DawComponent implements OnInit {
 
     public mixer: Mixer;
 
+    public oscillators = [0];
+
     private audioCtx: AudioContext;
     private source: AudioBufferSourceNode;
 
@@ -19,6 +21,10 @@ export class DawComponent implements OnInit {
     public ngOnInit() {
         this.audioCtx = new ((<any>window).AudioContext || (<any>window).webkitAudioContext)();
         this.mixer = new Mixer(this.audioCtx);
+    }
+
+    public addOscillator() {
+        this.oscillators.push(0);
     }
 
     public fileSelected(file: File) {

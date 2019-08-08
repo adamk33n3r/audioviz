@@ -1,5 +1,9 @@
 <!-- <av-file style='float: left' (file)='fileSelected($event)'></av-file> -->
 
-<av-oscillator [mixer]='mixer'></av-oscillator>
+<button mat-button mat-raised-button (click)='addOscillator()'>Add Oscillator</button>
+<br />
+<br />
+
+<av-oscillator style='display: inline-block;' *ngFor='let osc of oscillators' [mixer]='mixer'></av-oscillator>
 
 <av-mixer [mixer]='mixer'></av-mixer>
