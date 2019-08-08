@@ -90,6 +90,12 @@ THE SOFTWARE.
 
 @angular/material/button
 
+@angular/material/core
+
+@angular/material/form-field
+
+@angular/material/select
+
 @angular/material/slider
 
 @angular/platform-browser
