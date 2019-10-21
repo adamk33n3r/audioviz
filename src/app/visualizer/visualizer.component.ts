@@ -74,11 +74,114 @@ export class VisualizerComponent implements OnInit, OnDestroy {
   public canvasCtx: CanvasRenderingContext2D;
   public waveformCanvas: HTMLCanvasElement;
   public waveformCtx: CanvasRenderingContext2D;
+  public circleCanvas: HTMLCanvasElement;
+  public circleCtx: CanvasRenderingContext2D;
 
   public mixer: Mixer;
 
   public startedAt: number;
   public pausedAt: number;
+
+  private rot: number = 0;
+  private pts = [
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+    10, 0, 0, 10, 15,
+  ];
+
+  public drawCircle() {
+    this.rot += Math.PI / 8;
+    if (this.rot >= Math.PI * 2) {
+      this.rot -= Math.PI * 2;
+    }
+    // console.log((this.rot * 180) / Math.PI);
+    // requestAnimationFrame(() => this.drawCircle());
+    // setTimeout(() => this.drawCircle(), 100);
+    this.circleCtx.fillStyle = 'black';
+    this.circleCtx.fillRect(0, 0, 600, 600);
+    this.circleCtx.fillStyle = 'yellow';
+    this.circleCtx.strokeStyle = 'yellow';
+
+    for (let i = 0; i < this.pts.length; i++) {
+      const pt = this.pts[i];
+      let newPt = pt;// + Math.random() * 10 - 5;
+      if (newPt > 15) {
+        newPt = 15;
+      } else if (newPt < -15) {
+        newPt = -15;
+      }
+      this.pts[i] = newPt;
+    }
+    this.pts[this.pts.length - 1] = this.pts[0];
+
+
+    this.drawPolygon(300, 300, this.pts);
+  }
+
+  public drawPolygon(x: number, y: number, pts: number[], size: number = 100, rot?: number, fill: boolean = false) {
+    const theta = 2 * Math.PI / pts.length;
+    this.circleCtx.beginPath();
+    this.circleCtx.arc(x, y, 5, 0, 2 * Math.PI);
+    this.circleCtx.stroke();
+
+    this.circleCtx.save();
+    this.circleCtx.translate(x, y);
+    this.circleCtx.rotate(rot);
+
+    const startHeight = true ? pts[0] : 0;
+    this.circleCtx.beginPath();
+    this.circleCtx.moveTo(size * Math.cos(0) + Math.cos(0) * startHeight, size * Math.sin(0) + Math.sin(0) * startHeight);
+
+    pts.forEach((height, nextX) => {
+      nextX += 1;
+      const newX = Math.cos(nextX * theta) * size + (true ? (Math.cos(nextX * theta) * height) : 0);
+      const newY = Math.sin(nextX * theta) * size + (true ? (Math.sin(nextX * theta) * height) : 0);
+      this.circleCtx.lineTo(newX, newY);
+    });
+    this.circleCtx.stroke();
+    if (fill)
+      this.circleCtx.fill();
+    this.circleCtx.restore();
+    this.circleCtx.closePath();
+  }
 
   public ngOnInit() {
     this.audioCtx = new ((<any> window).AudioContext || (<any> window).webkitAudioContext)();
@@ -113,6 +216,12 @@ export class VisualizerComponent implements OnInit, OnDestroy {
     this.canvasCtx = this.canvas.getContext('2d');
     this.waveformCanvas = document.querySelector('#waveform') as HTMLCanvasElement;
     this.waveformCtx = this.waveformCanvas.getContext('2d');
+
+    this.circleCanvas = document.querySelector('#circle') as HTMLCanvasElement;
+    this.circleCtx = this.circleCanvas.getContext('2d');
+
+    // this.drawCircle();
+
 
     this.waveformCanvas.addEventListener('click', (event) => {
       if (!this.source) {
@@ -318,7 +427,7 @@ export class VisualizerComponent implements OnInit, OnDestroy {
         this.drawBar(this.waveformCtx, i, maxHeight - height, 1, 2 * height, '#aaa');
       });
 
-      // Loops
+      // Loops itself
       this.draw(buffer);
   }
 
@@ -436,6 +545,7 @@ export class VisualizerComponent implements OnInit, OnDestroy {
     const padding = 1;
     const extra = (bands.length) * padding;
     const barWidth = ((this.canvas.width - extra) / (bands.length));
+    let pts = [];
     for (let i = 0; i < bands.length; i++) {
       let divider = 3;
       if (i >= bands.length - (bands.length * 0.01) || i <= bands.length * 0.01) {
@@ -467,7 +577,33 @@ export class VisualizerComponent implements OnInit, OnDestroy {
       const height = barHeight * this.canvas.height / 2;
       this.canvasCtx.fillRect(xPos, this.canvas.height - height, barWidth, Math.max(1, height));
       xPos += barWidth + padding;
+
+      pts.push(barHeight /*/ Math.log10(this.multiplier) * Math.log10(100)*/ * 100);
     }
+
+    pts = pts.slice(5, bands.length - 5);
+    pts.push(pts[0]);
+
+
+    // START CIRCLE
+
+    this.circleCtx.fillStyle = 'black';
+    this.circleCtx.fillRect(0, 0, 600, 600);
+    this.circleCtx.strokeStyle = 'yellow';
+    this.circleCtx.fillStyle = 'yellow';
+    const mag = pts.reduce((sum, val) => sum + val / 30, 0) / 40;
+    this.circleCtx.strokeStyle = 'rgb(0, ' + (mag * 255 + 100) + ', 255)';
+    this.circleCtx.lineWidth = 4;
+
+    this.rot += Math.PI / 256;
+    if (this.rot >= Math.PI * 2) {
+      this.rot -= Math.PI * 2;
+    }
+    this.drawPolygon(300, 300, pts, 150, 0);
+
+
+    // END CIRCLE
+
 
     xPos = 0;
 
@@ -489,5 +625,6 @@ export class VisualizerComponent implements OnInit, OnDestroy {
       this.canvasCtx.fillRect(xPos, 100 - barHeight / 2, barWidth2, barHeight);
       xPos += barWidth2 + padding2;
     }
+
   }
 }
