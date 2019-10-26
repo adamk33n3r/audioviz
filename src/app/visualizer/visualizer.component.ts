@@ -136,7 +136,7 @@ export class VisualizerComponent implements OnInit, OnDestroy {
     // requestAnimationFrame(() => this.drawCircle());
     // setTimeout(() => this.drawCircle(), 100);
     this.circleCtx.fillStyle = 'black';
-    this.circleCtx.fillRect(0, 0, 600, 600);
+    this.circleCtx.fillRect(0, 0, this.circleCanvas.width, this.circleCanvas.height);
     this.circleCtx.fillStyle = 'yellow';
     this.circleCtx.strokeStyle = 'yellow';
 
@@ -153,7 +153,7 @@ export class VisualizerComponent implements OnInit, OnDestroy {
     this.pts[this.pts.length - 1] = this.pts[0];
 
 
-    this.drawPolygon(300, 300, this.pts);
+    this.drawPolygon(10, this.circleCanvas.height / 2, this.pts);
   }
 
   public drawPolygon(x: number, y: number, pts: number[], size: number = 100, rot?: number, fill: boolean = false) {
@@ -485,6 +485,7 @@ export class VisualizerComponent implements OnInit, OnDestroy {
     // }
     this.drawBars();
     this.drawWave();
+    // this.drawCircle();
 
     // Draw playing cursor
     // const percent = this.audioCtx.currentTime / this.source.buffer.duration;
@@ -588,7 +589,7 @@ export class VisualizerComponent implements OnInit, OnDestroy {
     // START CIRCLE
 
     this.circleCtx.fillStyle = 'black';
-    this.circleCtx.fillRect(0, 0, 600, 600);
+    this.circleCtx.fillRect(0, 0, this.circleCanvas.width, this.circleCanvas.height);
     this.circleCtx.strokeStyle = 'yellow';
     this.circleCtx.fillStyle = 'yellow';
     const mag = pts.reduce((sum, val) => sum + val / 30, 0) / 40;
@@ -599,7 +600,7 @@ export class VisualizerComponent implements OnInit, OnDestroy {
     if (this.rot >= Math.PI * 2) {
       this.rot -= Math.PI * 2;
     }
-    this.drawPolygon(300, 300, pts, 150, 0);
+    this.drawPolygon(this.circleCanvas.width / 2, this.circleCanvas.height / 2, pts, 150, 0);
 
 
     // END CIRCLE
